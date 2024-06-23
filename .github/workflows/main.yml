@@ -13,4 +13,4 @@ jobs:
 
     - name: Build C Code
       run: |
-        find . -name '*.cc' -print0 | xargs -0 -I {} clang++ -fsanitize=undefined -o {}.out {}
+        find . -name '*.c' -print0 | xargs -0 -I {} clang++ -fsanitize=undefined -o {}.out {}
