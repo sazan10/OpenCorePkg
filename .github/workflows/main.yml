@@ -3,17 +3,6 @@ name: Build
 
 on:
   push:
-  pull_request:
-  workflow_dispatch:
-  release:
-    types: [published]
-
-env:
-  PROJECT_TYPE: UEFI
-  FORCE_INSTALL: 1
-  HAS_OPENSSL_BUILD: 1
-  HAS_OPENSSL_W32BUILD: 0
-  WERROR: 1
 
 jobs:
   build-linux-gcc5:
