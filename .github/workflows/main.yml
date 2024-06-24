@@ -10,7 +10,17 @@ jobs:
       uses: actions/checkout@v4
       with:
         ref: 55bed88fa1eca03d8e9cea17307325828b57bfcd
+    - name: Use Docker in rootless mode.
+      uses: ScribeMD/rootless-docker@0.2.2
 
-    - name: Build C Code
-      run: |
-        find . -name '*.c' -print0 | xargs -0 -I {} clang++ -fsanitize=undefined -o {}.out {}
+    - name: ./build_duet.tool
+      run: docker compose run build-duet
+
+    - name: ./build_oc.tool
+      run: docker compose run build-oc
+
+    - name: Upload to Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: Linux GCC Artifacts
+        path: Binaries/*.zip
