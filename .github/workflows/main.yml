@@ -5,11 +5,9 @@ on:
   push:
 
 jobs:
-  build-linux-gcc5:
+  build-for-linux:
     name: Linux GCC
     runs-on: ubuntu-22.04
-    env:
-      TOOLCHAINS: GCC
     steps:
       - uses: actions/checkout@v4
 
