@@ -1,28 +1,40 @@
 
-on: push
+name: Build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+env:
+  PROJECT_TYPE: UEFI
+  FORCE_INSTALL: 1
+  HAS_OPENSSL_BUILD: 1
+  HAS_OPENSSL_W32BUILD: 0
+  WERROR: 1
 
 jobs:
-  build:
-    name: Build on Ubuntu
-    runs-on: ubuntu-20.04
+  build-linux-gcc5:
+    name: Linux GCC
+    runs-on: ubuntu-22.04
     env:
       TOOLCHAINS: GCC
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-      with:
-        ref: 55bed88fa1eca03d8e9cea17307325828b57bfcd
-    - name: Use Docker in rootless mode.
-      uses: ScribeMD/rootless-docker@0.2.2
+      - uses: actions/checkout@v4
 
-    - name: ./build_duet.tool
-      run: docker compose run build-duet
+      - name: Use Docker in rootless mode.
+        uses: ScribeMD/rootless-docker@0.2.2
 
-    - name: ./build_oc.tool
-      run: docker compose run build-oc
+      - name: ./build_duet.tool
+        run: docker compose run build-duet
 
-    - name: Upload to Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: Linux GCC Artifacts
-        path: Binaries/*.zip
+      - name: ./build_oc.tool
+        run: docker compose run build-oc
+
+      - name: Upload to Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Linux GCC Artifacts
+          path: Binaries/*.zip
