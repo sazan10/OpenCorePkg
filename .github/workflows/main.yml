@@ -1,15 +1,12 @@
 
 on: push
-env:
-  PROJECT_TYPE: UEFI
-  FORCE_INSTALL: 1
-  HAS_OPENSSL_BUILD: 1
-  HAS_OPENSSL_W32BUILD: 0
-  WERROR: 1
+
 jobs:
   build:
     name: Build on Ubuntu
     runs-on: ubuntu-20.04
+    env:
+      TOOLCHAINS: GCC
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
